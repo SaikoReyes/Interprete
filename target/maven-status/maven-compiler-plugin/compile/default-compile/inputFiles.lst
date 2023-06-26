@@ -1,0 +1,10 @@
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Arbol.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Principal.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/TablaSimbolos.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/GeneradorAST.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/TipoToken.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Token.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Scanner.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Parser.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/Nodo.java
+/Users/saiko/NetBeansProjects/Interprete/src/main/java/mx/ipn/escom/compiladores/GeneradorPostfija.java
