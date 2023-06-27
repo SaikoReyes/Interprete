@@ -72,7 +72,7 @@ public class Scanner {
             } else if (caracterActual == '"') {
                 // Escanear cadena entre comillas
                 String cadena = escanearCadena();
-                tokens.add(new Token(TipoToken.CADENA, cadena, posicionActual));
+                tokens.add(new Token(TipoToken.CADENA, cadena, cadena ,posicionActual));
             } else if(caracterActual == '/'){
                 if(source.charAt(posicionActual+1)=='*'){
                     posicionActual++;
@@ -97,7 +97,7 @@ public class Scanner {
                 posicionActual++;
             }
         }
-        tokens.add(new Token(TipoToken.EOF, ""));
+        tokens.add(new Token(TipoToken.EOF, "",null,posicionActual));
         return tokens;
     }
     
@@ -141,15 +141,15 @@ public class Scanner {
     private Token crearToken(String lexema) {
         if (palabrasReservadas.containsKey(lexema)) {
             TipoToken tipo = palabrasReservadas.get(lexema);
-            return new Token(tipo, lexema, posicionActual);
+            return new Token(tipo, lexema,null,posicionActual);
         } else if (isNumeric(lexema)) {
-            return new Token(TipoToken.NUMERO, lexema, posicionActual);
+            return new Token(TipoToken.NUMERO, lexema,null, posicionActual);
         } else if (lexema.equals("class")) {
-            return new Token(TipoToken.CLASS, lexema, posicionActual);
+            return new Token(TipoToken.CLASS, lexema,null, posicionActual);
         } else if (lexema.equals("fun")) {
-            return new Token(TipoToken.FUN, lexema, posicionActual);
+            return new Token(TipoToken.FUN, lexema,null, posicionActual);
         } else {
-            return new Token(TipoToken.IDENTIFICADOR, lexema, posicionActual);
+            return new Token(TipoToken.IDENTIFICADOR, lexema,null, posicionActual);
         }
     }
     

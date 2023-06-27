@@ -15,7 +15,7 @@ public class GeneradorPostfija {
         this.pila = new Stack<>();
         this.postfija = new ArrayList<>();
     }
-
+    
     public List<Token> convertir(){
         boolean estructuraDeControl = false;
         Stack<Token> pilaEstructurasDeControl = new Stack<>();
@@ -53,7 +53,7 @@ public class GeneradorPostfija {
                     pila.pop();
                 }
                 if(estructuraDeControl){
-                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
                 }
             }
             else if(t.esOperador()){
@@ -89,7 +89,7 @@ public class GeneradorPostfija {
                     // El cual servirá para indicar que se finaliza la estructura
                     // de control.
                     pila.pop();
-                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
 
                     // Se extrae de la pila de estrucuras de control, el elemento en el tope
                     pilaEstructurasDeControl.pop();
@@ -97,21 +97,16 @@ public class GeneradorPostfija {
                         estructuraDeControl = false;
                     }
                 }
-
-
             }
         }
         while(!pila.isEmpty()){
             Token temp = pila.pop();
             postfija.add(temp);
         }
-
         while(!pilaEstructurasDeControl.isEmpty()){
             pilaEstructurasDeControl.pop();
-            postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+            postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
         }
-
         return postfija;
     }
-
 }

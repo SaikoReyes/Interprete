@@ -66,8 +66,8 @@ public class GeneradorAST {
                         En el caso del VAR, es necesario eliminar el igual que
                         pudiera aparecer en la raíz del nodo n.
                          */
-                        if(n.getValue().tipo == TipoToken.IGUAL_QUE){
-                            padre.insertarHijos(n.getHijos());
+                        if(n.getValue().tipo == TipoToken.IGUAL_QUE){   
+                            padre.insertarHijos(n.getHijos());                           
                         }
                         else{
                             padre.insertarSiguienteHijo(n);
@@ -79,19 +79,19 @@ public class GeneradorAST {
                         padre.insertarSiguienteHijo(n);
                         pilaPadres.pop();
                         padre = pilaPadres.peek();
-                    }
-                    
+                    }                    
                     else {
                         padre.insertarSiguienteHijo(n);
                     }
                 }
-            }
+            }            
         }
 
         // Suponiendo que en la pila sólamente queda un nodo
         // Nodo nodoAux = pila.pop();
-        Arbol programa = new Arbol(raiz);
+        Arbol programa = new Arbol(raiz);       
 
         return programa;
+        
     }
 }

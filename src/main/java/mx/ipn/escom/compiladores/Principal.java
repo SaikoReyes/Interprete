@@ -55,9 +55,9 @@ public class Principal {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-//        for(Token token : tokens){
-//            System.out.println(token);
-//        }
+        for(Token token : tokens){
+            System.out.println(token);
+        }
         //try{
         Parser parser = new Parser(tokens);
         parser.parse();
@@ -69,6 +69,9 @@ public class Principal {
             for(Token token : postfija){
                 System.out.println(token);
             }
+            GeneradorAST gast = new GeneradorAST(postfija);
+            Arbol programa = gast.generarAST();
+            programa.recorrer();
         }
         //}catch(IndexOutOfBoundsException e){
         //    System.out.print("\n------->Cadena no Valida\n\n");

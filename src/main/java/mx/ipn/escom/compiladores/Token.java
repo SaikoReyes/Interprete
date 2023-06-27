@@ -6,20 +6,22 @@ public class Token {
 
     final TipoToken tipo;
     final String lexema;
+    final int posicion;
+    final Object literal;
 
-    final Object posicion;
-
-    public Token(TipoToken tipo, String lexema, Object posicion) {
+    public Token(TipoToken tipo, String lexema, Object literal, int posicion) {
         this.tipo = tipo;
         this.lexema = lexema;
+        this.literal = literal;
         this.posicion = posicion;
+        
     }
 
-    public Token(TipoToken tipo, String lexema) {
-        this.tipo = tipo;
-        this.lexema = lexema;
-        this.posicion = 0;
-    }
+//    public Token(TipoToken tipo, String lexema) {
+//        this.tipo = tipo;
+//        this.lexema = lexema;
+//        
+//    }
     
     
 
@@ -44,6 +46,7 @@ public class Token {
         switch (this.tipo){
             case IDENTIFICADOR:
             case NUMERO:
+            case CADENA:
                 return true;
             default:
                 return false;
