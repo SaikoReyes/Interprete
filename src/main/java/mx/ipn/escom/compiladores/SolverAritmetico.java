@@ -11,16 +11,16 @@ public class SolverAritmetico {
         this.nodo = nodo;
     }
 
-    public Object resolver(TablaSimbolos ts){
-        return resolver(nodo,ts);
+    public Object resolver(TablaSimbolos ts) {
+        return resolver(nodo, ts);
     }
-    private Object resolver(Nodo n, TablaSimbolos ts){
+
+    private Object resolver(Nodo n, TablaSimbolos ts) {
         // No tiene hijos, es un operando
-        if(n.getHijos() == null){
-            if(n.getValue().tipo == TipoToken.NUMERO || n.getValue().tipo == TipoToken.CADENA){
+        if (n.getHijos() == null) {
+            if (n.getValue().tipo == TipoToken.NUMERO || n.getValue().tipo == TipoToken.CADENA) {
                 return n.getValue().literal;
-            }
-            else if(n.getValue().tipo == TipoToken.IDENTIFICADOR){
+            } else if (n.getValue().tipo == TipoToken.IDENTIFICADOR) {
                 // Ver la tabla de símbolos
                 return ts.obtener(n.getValue().lexema);
             }
@@ -30,32 +30,30 @@ public class SolverAritmetico {
         Nodo izq = n.getHijos().get(0);
         Nodo der = n.getHijos().get(1);
 
-        Object resultadoIzquierdo = resolver(izq,ts);
-        Object resultadoDerecho = resolver(der,ts);
+        Object resultadoIzquierdo = resolver(izq, ts);
+        Object resultadoDerecho = resolver(der, ts);
 
-        if(resultadoIzquierdo instanceof Double && resultadoDerecho instanceof Double){
-            switch (n.getValue().tipo){
+        if (resultadoIzquierdo instanceof Double && resultadoDerecho instanceof Double) {
+            switch (n.getValue().tipo) {
                 case MAS:
-                    return ((Double)resultadoIzquierdo + (Double) resultadoDerecho);
+                    return ((Double) resultadoIzquierdo + (Double) resultadoDerecho);
                 case GUION_MEDIO:
-                    return ((Double)resultadoIzquierdo - (Double) resultadoDerecho);
+                    return ((Double) resultadoIzquierdo - (Double) resultadoDerecho);
                 case ASTERISCO:
-                    return ((Double)resultadoIzquierdo * (Double) resultadoDerecho);
+                    return ((Double) resultadoIzquierdo * (Double) resultadoDerecho);
                 case BARRA_INCL:
-                    return ((Double)resultadoIzquierdo / (Double) resultadoDerecho);
+                    return ((Double) resultadoIzquierdo / (Double) resultadoDerecho);
             }
-        }
-        else if(resultadoIzquierdo instanceof String && resultadoDerecho instanceof String){
-           
-                
-                if (n.getValue().tipo == TipoToken.MAS) {
+        } else if (resultadoIzquierdo instanceof String && resultadoDerecho instanceof String) {
+
+            if (n.getValue().tipo == TipoToken.MAS) {
                 // Ejecutar la concatenación
-                    return ((String) resultadoIzquierdo + (String) resultadoDerecho);
-                
-                }
-        }
-        else{
+                return ((String) resultadoIzquierdo + (String) resultadoDerecho);
+
+            }
+        } else {
             // Error por diferencia de tipos
+            System.out.println("Error, tipos incompatibles");
             System.exit(0);
         }
 

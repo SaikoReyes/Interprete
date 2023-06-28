@@ -1,111 +1,157 @@
 package mx.ipn.escom.compiladores;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Arbol {
+
     private final Nodo raiz;
 
-    public Arbol(Nodo raiz){
+    public Arbol(Nodo raiz) {
         this.raiz = raiz;
     }
 
-    public void recorrer(TablaSimbolos ts){
-        
-        for(Nodo n : raiz.getHijos()){
+    public void recorrer(TablaSimbolos ts) {
+
+        for (Nodo n : raiz.getHijos()) {
             Token t = n.getValue();
-            switch (t.tipo){
+            switch (t.tipo) {
                 // Operadores aritméticos
 
                 case VAR:
-                    if(n.getHijos().size()>1){
+                    if (n.getHijos().size() > 1) {
                         Nodo izquierdo = n.getHijos().get(0);
 
                         Nodo derecho = n.getHijos().get(1);
+                        switch (derecho.getValue().tipo) {
+                            case MAS:
+                            case GUION_MEDIO:
+                            case ASTERISCO:
+                            case BARRA_INCL:
+                                SolverAritmetico solver = new SolverAritmetico(derecho);
+                                Object resultado = solver.resolver(ts);
+                                if (ts.existeIdentificador(izquierdo.getValue().lexema)) {
+                                    Principal.error(izquierdo.getValue().posicion, "Variable Existente");
+                                } else {
+                                    ts.asignar(izquierdo.getValue().lexema, resultado);
 
-                        if(ts.existeIdentificador(izquierdo.getValue().lexema)){
-                            Principal.error(izquierdo.getValue().posicion, "Variable Existente");
-                        }else{
-                            ts.asignar(izquierdo.getValue().lexema, derecho.getValue().literal);
+                                }
+                                break;
+                            default:
+                                if (ts.existeIdentificador(izquierdo.getValue().lexema)) {
+                                    Principal.error(izquierdo.getValue().posicion, "Variable Existente");
+                                } else {
+                                    ts.asignar(izquierdo.getValue().lexema, derecho.getValue().literal);
+                                }
+                                break;
                         }
-                    }else{
+                    } else {
                         Nodo izquierdo = n.getHijos().get(0);
-                        if(ts.existeIdentificador(izquierdo.getValue().lexema)){
+                        if (ts.existeIdentificador(izquierdo.getValue().lexema)) {
                             Principal.error(izquierdo.getValue().posicion, "Variable Existente");
-                        }else{
+                        } else {
                             ts.asignar(izquierdo.getValue().lexema, null);
                         }
                     }
-                    
+
                     break;
                 case PRINT:
                     Nodo izquierdo01 = n.getHijos().get(0);
-                    switch(izquierdo01.getValue().tipo){
+                    switch (izquierdo01.getValue().tipo) {
                         case MAS:
                             //System.out.println("Ayudaporfavor");
                             SolverAritmetico solver = new SolverAritmetico(izquierdo01);
                             Object resultado = solver.resolver(ts);
                             System.out.println(resultado);
                         default:
-                            if(ts.existeIdentificador(izquierdo01.getValue().lexema)){
+                            if (ts.existeIdentificador(izquierdo01.getValue().lexema)) {
+
                                 System.out.println(ts.obtener(izquierdo01.getValue().lexema));
-                            }else{
-                                System.out.println(izquierdo01.getValue().literal);
+                            } else {
+                                if (izquierdo01.getValue().literal != null) {
+                                    System.out.println(izquierdo01.getValue().literal);
+                                }
+
                             }
                             break;
                     }
                     break;
-                
+
                 case IF:
                     Nodo izquierdo02 = n.getHijos().get(0);
                     OpLogicos logic = new OpLogicos(izquierdo02);
                     Object res01 = logic.res(ts);
-                    if((Boolean)res01){
-                        if(n.getHijos().size()>2){
-                            for(int i = 0; i<n.getHijos().size();i++){
-                     Nodo der01 = n.getHijos().get(i);
-                     switch (der01.getValue().tipo){
-                         case PRINT:
-                             Nodo izquierda3 = der01.getHijos().get(0);
-                             if(ts.existeIdentificador(izquierda3.getValue().lexema)){
-                                 System.out.println(ts.obtener(izquierda3.getValue().lexema));
-                             }else{
-                                 System.out.println(izquierda3.getValue().literal);
-                             }
-                             break;
-                         default:
-                             break;
-                     }
+                    if ((Boolean) res01) {
+                        if (n.getHijos().size() > 2) {
+                            for (int i = 0; i < n.getHijos().size(); i++) {
+                                Nodo der01 = n.getHijos().get(i);
+                                switch (der01.getValue().tipo) {
+                                    case PRINT:
+                                        Nodo izquierda3 = der01.getHijos().get(0);
+                                        if (ts.existeIdentificador(izquierda3.getValue().lexema)) {
+                                            System.out.println(ts.obtener(izquierda3.getValue().lexema));
+                                        } else {
+                                            if (izquierda3.getValue().literal != null) {
+                                                System.out.println(izquierda3.getValue().literal);
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
-                    }else{
+                        } else {
                             Nodo der01 = n.getHijos().get(1);
-                            switch(der01.getValue().tipo){
+                            switch (der01.getValue().tipo) {
                                 case PRINT:
                                     Nodo izquierda3 = der01.getHijos().get(0);
-                                    if(ts.existeIdentificador(izquierda3.getValue().lexema)){
+                                    if (ts.existeIdentificador(izquierda3.getValue().lexema)) {
                                         System.out.println(ts.obtener(izquierda3.getValue().lexema));
-                                    }else{
-                                        System.out.println(izquierda3.getValue().literal);
+                                    } else {
+                                        if (izquierda3.getValue().literal != null) {
+                                            System.out.println(izquierda3.getValue().literal);
+                                        }
                                     }
                                     break;
                                 default:
                                     break;
-                            }   
+                            }
                         }
-                    }else{
-                        Nodo else01 = n.getHijos().get(2);
-                        Nodo izquierda_else=else01.getHijos().get(0);
-                        switch(izquierda_else.getValue().tipo){
-                            case PRINT:
-                                Nodo izquierda3 = izquierda_else.getHijos().get(0);
-                                if(ts.existeIdentificador(izquierda3.getValue().lexema)){
-                                    System.out.println(ts.obtener(izquierda3.getValue().lexema));
-                                }else{
-                                    System.out.println(izquierda3.getValue().literal);
+                    } else {
+                        if (n.getHijos().size() > 2) {
+                            Nodo aux = n.getHijos().get(2);
+                            if (aux.getHijos().size() > 2) {
+                                for (int i = 0; i < aux.getHijos().size(); i++) {
+                                    Nodo derecha01 = aux.getHijos().get(i);
+                                    switch (derecha01.getValue().tipo) {
+                                        case PRINT:
+                                            Nodo izquierda03 = derecha01.getHijos().get(0);
+                                            if (ts.existeIdentificador(izquierda03.getValue().lexema)) {
+                                                System.out.print(ts.obtener(izquierda03.getValue().lexema));
+                                            } else {
+                                                if (izquierda03.getValue().literal != null) {
+                                                    System.out.println(izquierda03.getValue().literal);
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
-                                break;
-                            default:
-                                break;
+                            } else {
+                                Nodo derecha01 = aux.getHijos().get(0);
+                                switch (derecha01.getValue().tipo) {
+                                    case PRINT:
+                                        Nodo izquierda03 = derecha01.getHijos().get(0);
+                                        if (ts.existeIdentificador(izquierda03.getValue().lexema)) {
+                                            System.out.print(ts.obtener(izquierda03.getValue().lexema));
+                                        } else {
+                                            if (izquierda03.getValue().literal != null) {
+                                                System.out.println(izquierda03.getValue().literal);
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                         }
                     }
                     break;
@@ -116,4 +162,3 @@ public class Arbol {
         }
     }
 }
-

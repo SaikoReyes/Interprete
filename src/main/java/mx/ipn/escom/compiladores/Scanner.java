@@ -43,6 +43,9 @@ public class Scanner {
         palabrasReservadas.put("while", TipoToken.WHILE);
         palabrasReservadas.put("fun", TipoToken.FUN);
         palabrasReservadas.put("else", TipoToken.ELSE);
+        palabrasReservadas.put("and", TipoToken.AND);
+        palabrasReservadas.put("or", TipoToken.OR);
+        
         
         
         
@@ -67,8 +70,8 @@ public class Scanner {
                 String palabra = escanearPalabra();
                 tokens.add(crearToken(palabra));
             } else if (esNumero(caracterActual)) {
-                String palabra = escanearPalabra();
-                tokens.add(crearToken(palabra));
+                String numero = escanearNumero();
+                tokens.add(new Token(TipoToken.NUMERO, numero, Double.valueOf(numero), posicionActual));
             } else if (caracterActual == '"') {
                 // Escanear cadena entre comillas
                 String cadena = escanearCadena();
@@ -110,8 +113,8 @@ public class Scanner {
         return Character.isLetter(c);
     }
     
-    private boolean esNumero(char c){
-        return Character.isDigit(c);
+    private boolean esNumero(char c) {
+        return Character.isDigit(c) || c == '.';
     }
 
     private String escanearPalabra() {
@@ -170,6 +173,23 @@ public class Scanner {
         }
 
         return false;
+    }
+    private String escanearNumero() {
+        int inicio = posicionActual;
+        boolean hayPunto = false;
+
+        while (posicionActual < source.length() && (Character.isDigit(source.charAt(posicionActual)) || source.charAt(posicionActual) == '.')) {
+            if (source.charAt(posicionActual) == '.') {
+                if (hayPunto) {
+                    // Ya hay un punto en el número, lo tratamos como una palabra
+                    return escanearPalabra();
+                }
+                hayPunto = true;
+            }
+            posicionActual++;
+        }
+
+        return source.substring(inicio, posicionActual);
     }
 }
 

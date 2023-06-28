@@ -65,6 +65,8 @@ public class Token {
             case MENOR_QUE:
             case OP_MENOR_IGUAL_QUE:
             case OP_IGUAL_QUE:
+            case AND:
+            case OR:
                 return true;
             default:
                 return false;
@@ -110,18 +112,23 @@ public class Token {
         switch (this.tipo){
             case ASTERISCO:
             case BARRA_INCL:
-                return 3;
+                return 7;
             case MAS:
             case GUION_MEDIO:
-                return 2;
+                return 6;
             case IGUAL_QUE:
-            case OP_IGUAL_QUE:
                 return 1;
+            case AND:
+                return 3;
+            case OR:
+                return 2;
+            case OP_IGUAL_QUE:
+                return 4;
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
             case MENOR_QUE:
             case OP_MENOR_IGUAL_QUE:
-                return 1;
+                return 4;
         }
 
         return 0;
@@ -138,6 +145,8 @@ public class Token {
             case OP_MAYOR_IGUAL_QUE:
             case OP_MENOR_IGUAL_QUE:
             case MENOR_QUE:
+            case AND:
+            case OR:
                 return 2;
         }
         return 0;

@@ -55,10 +55,10 @@ public class Principal {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        for(Token token : tokens){
-            System.out.println(token);
-        }
-        //try{
+//        for(Token token : tokens){
+//            System.out.println(token);
+//        }
+        try{
         Parser parser = new Parser(tokens);
         parser.parse();
         if(parser.esValida){
@@ -66,18 +66,21 @@ public class Principal {
             
             GeneradorPostfija gpf = new GeneradorPostfija(tokens);
             List<Token> postfija = gpf.convertir();
-            for(Token token : postfija){
-                System.out.println(token);
-            }
+//            for(Token token : postfija){
+//                System.out.println(token);
+//            }
             GeneradorAST gast = new GeneradorAST(postfija);
             Arbol programa = gast.generarAST();
             programa.recorrer(ts);
         }
-        //}catch(IndexOutOfBoundsException e){
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage() );
+        }
+        
         //    System.out.print("\n------->Cadena no Valida\n\n");
-        //}catch(StackOverflowError e){
-        //    System.out.print("\n------->Cadena no Valida\n\n");
-        //}
+//        }catch(StackOverflowError e){
+//        //    System.out.print("\n------->Cadena no Valida\n\n");
+//        }
         
         
     }
