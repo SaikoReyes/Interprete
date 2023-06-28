@@ -64,6 +64,7 @@ public class Token {
             case OP_MAYOR_IGUAL_QUE:
             case MENOR_QUE:
             case OP_MENOR_IGUAL_QUE:
+            case OP_IGUAL_QUE:
                 return true;
             default:
                 return false;
@@ -76,6 +77,13 @@ public class Token {
             case IF:
             case PRINT:
             case ELSE:
+            case RETURN:
+            case NULL:
+            case THIS:
+            case SUPER:
+            case TRUE:
+            case WHILE:
+            case FOR:           
                 return true;
             default:
                 return false;
@@ -87,6 +95,7 @@ public class Token {
             case IF:
             case ELSE:
             case WHILE:
+            case FOR:            
                 return true;
             default:
                 return false;
@@ -106,6 +115,7 @@ public class Token {
             case RESTA:
                 return 2;
             case IGUAL_QUE:
+            case OP_IGUAL_QUE:
                 return 1;
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
@@ -126,6 +136,8 @@ public class Token {
             case IGUAL_QUE:
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
+            case OP_MENOR_IGUAL_QUE:
+            case MENOR_QUE:
                 return 2;
         }
         return 0;

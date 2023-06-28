@@ -143,7 +143,7 @@ public class Scanner {
             TipoToken tipo = palabrasReservadas.get(lexema);
             return new Token(tipo, lexema,null,posicionActual);
         } else if (isNumeric(lexema)) {
-            return new Token(TipoToken.NUMERO, lexema,null, posicionActual);
+            return new Token(TipoToken.NUMERO, lexema,Double.valueOf(lexema), posicionActual);
         } else if (lexema.equals("class")) {
             return new Token(TipoToken.CLASS, lexema,null, posicionActual);
         } else if (lexema.equals("fun")) {

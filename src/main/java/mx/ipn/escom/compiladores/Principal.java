@@ -11,7 +11,7 @@ import java.util.List;
 public class Principal {
 
     static boolean existenErrores = false;
-
+    static TablaSimbolos ts = new TablaSimbolos();
     public static void main(String[] args) throws IOException {
         if(args.length>1){
             System.exit(0);
@@ -71,7 +71,7 @@ public class Principal {
             }
             GeneradorAST gast = new GeneradorAST(postfija);
             Arbol programa = gast.generarAST();
-            programa.recorrer();
+            programa.recorrer(ts);
         }
         //}catch(IndexOutOfBoundsException e){
         //    System.out.print("\n------->Cadena no Valida\n\n");

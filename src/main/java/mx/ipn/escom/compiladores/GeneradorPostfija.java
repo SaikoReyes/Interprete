@@ -52,7 +52,7 @@ public class GeneradorPostfija {
                 if(pila.peek().tipo == TipoToken.PARENTESIS_IZQ){
                     pila.pop();
                 }
-                if(estructuraDeControl){
+                if(estructuraDeControl&&infija.get(i+1).tipo==TipoToken.LLAVE_IZQ){
                     postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
                 }
             }
@@ -90,9 +90,13 @@ public class GeneradorPostfija {
                     // de control.
                     pila.pop();
                     postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
+                    Token auxiliar = pilaEstructurasDeControl.pop();
 
                     // Se extrae de la pila de estrucuras de control, el elemento en el tope
-                    pilaEstructurasDeControl.pop();
+                    if(auxiliar.tipo == TipoToken.ELSE){
+                        pilaEstructurasDeControl.pop();
+                        postfija.add(new Token(TipoToken.PUNTO_COMA,";",null,0));
+                    }
                     if(pilaEstructurasDeControl.isEmpty()){
                         estructuraDeControl = false;
                     }
