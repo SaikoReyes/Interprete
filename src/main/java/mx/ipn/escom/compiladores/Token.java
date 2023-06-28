@@ -55,10 +55,10 @@ public class Token {
 
     public boolean esOperador(){
         switch (this.tipo){
-            case SUMA:
-            case RESTA:
-            case MULTIPLICACION:
-            case DIVISION:
+            case MAS:
+            case GUION_MEDIO:
+            case ASTERISCO:
+            case BARRA_INCL:
             case IGUAL_QUE:
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
@@ -108,11 +108,11 @@ public class Token {
 
     private int obtenerPrecedencia(){
         switch (this.tipo){
-            case MULTIPLICACION:
-            case DIVISION:
+            case ASTERISCO:
+            case BARRA_INCL:
                 return 3;
-            case SUMA:
-            case RESTA:
+            case MAS:
+            case GUION_MEDIO:
                 return 2;
             case IGUAL_QUE:
             case OP_IGUAL_QUE:
@@ -129,10 +129,10 @@ public class Token {
 
     public int aridad(){
         switch (this.tipo) {
-            case MULTIPLICACION:
-            case DIVISION:
-            case SUMA:
-            case RESTA:
+            case ASTERISCO:
+            case BARRA_INCL:
+            case MAS:
+            case GUION_MEDIO:
             case IGUAL_QUE:
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:

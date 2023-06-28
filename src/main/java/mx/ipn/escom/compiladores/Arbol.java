@@ -40,16 +40,21 @@ public class Arbol {
                     break;
                 case PRINT:
                     Nodo izquierdo01 = n.getHijos().get(0);
-                    
-                        
-                        
+                    switch(izquierdo01.getValue().tipo){
+                        case MAS:
+                            //System.out.println("Ayudaporfavor");
+                            SolverAritmetico solver = new SolverAritmetico(izquierdo01);
+                            Object resultado = solver.resolver(ts);
+                            System.out.println(resultado);
+                        default:
                             if(ts.existeIdentificador(izquierdo01.getValue().lexema)){
                                 System.out.println(ts.obtener(izquierdo01.getValue().lexema));
                             }else{
                                 System.out.println(izquierdo01.getValue().literal);
                             }
                             break;
-                   
+                    }
+                    break;
                 
                 case IF:
                     Nodo izquierdo02 = n.getHijos().get(0);
